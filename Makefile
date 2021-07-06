@@ -2,6 +2,7 @@
 # ----------------------------------
 #         LOCAL SET UP
 # ----------------------------------
+APP_NAME = trashnet-ai
 
 install_requirements:
 	@pip install -r requirements.txt
