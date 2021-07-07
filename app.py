@@ -39,10 +39,10 @@ if uploaded_file is not None:
     """)
     st.write(response.json()['prediction'])
     
-    # st.markdown("""
-    # ## Le niveau de confiance de Garby est de :
-    # """)
-    # st.write(response.json()['confidence'])
+    st.markdown("""
+    ## Le niveau de confiance de Garby est de :
+    """)
+    st.write(response.json()['confidence'])
     
     st.markdown("""
     ## Et voilà ! Merci qui ? Merci Garby !
