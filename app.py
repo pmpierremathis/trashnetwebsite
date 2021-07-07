@@ -7,7 +7,7 @@ from PIL import Image
 '''
 
 st.markdown("""
-    ### Bienvenue sur Trashnet.ai, votre assistant poubelle !""")
+    ### Bienvenue sur Garby.ai, votre assistant poubelle !""")
 
 st.markdown("""
     Vous ne savez pas dans quelle poubelle mettre votre déchet ?
