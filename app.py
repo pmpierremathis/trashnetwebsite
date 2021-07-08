@@ -22,8 +22,8 @@ st.markdown("""
 
 uploaded_file = st.file_uploader("Importez votre image ici:")
 
-# url = 'http://127.0.0.1:8000/predict/image'
-url = 'https://image-trashnet-znuzg7cgua-ew.a.run.app/predict/image'
+url = 'http://127.0.0.1:8000/predict/image'
+# url = 'https://image-trashnet-znuzg7cgua-ew.a.run.app/predict/image'
 
 if uploaded_file is not None:
     data = uploaded_file.read()
@@ -49,8 +49,10 @@ if uploaded_file is not None:
         ### Garby est confiant à plus de 90% que votre déchet doit aller dans la poubelle :
         """)
 
-        st.write(translation[response.json()['prediction']])
-        image = Image.open(f"{response.json()['prediction']}.png")
+        st.success(translation[response.json()['prediction']])
+        trash_image = Image.open(f"{response.json()['prediction']}.png")
+        st.image(trash_image)
+        
       
         # st.markdown("""
         # ### Le niveau de confiance de Garby est de :
