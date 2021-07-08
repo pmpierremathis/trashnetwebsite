@@ -22,8 +22,8 @@ st.markdown("""
 
 uploaded_file = st.file_uploader("Importez votre image ici:")
 
-url = 'http://127.0.0.1:8000/predict/image'
-# url = 'https://image-trashnet-znuzg7cgua-ew.a.run.app/predict/image'
+# url = 'http://127.0.0.1:8000/predict/image'
+url = 'https://image-trashnet-znuzg7cgua-ew.a.run.app/predict/image'
 
 if uploaded_file is not None:
     data = uploaded_file.read()
