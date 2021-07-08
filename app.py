@@ -17,7 +17,7 @@ st.markdown("""
     """)
 
 st.markdown("""
-    C'est très simple : prenez une photographie de votre déchet, et transmettez-la à Garby. Il vous donnera immédiatement la réponse.
+    C'est très simple : **prenez une photographie de votre déchet, et transmettez-la ci-dessous à Garby**. Il vous donnera immédiatement la réponse.
     """)
 
 uploaded_file = st.file_uploader("Importez votre image ici:")
@@ -50,7 +50,7 @@ if uploaded_file is not None:
         """)
 
         st.write(translation[response.json()['prediction']])
-        image = Image.open(f"'{translation[response.json()['prediction']]}.png'")
+        image = Image.open(f"{response.json()['prediction']}.png")
       
         # st.markdown("""
         # ### Le niveau de confiance de Garby est de :
