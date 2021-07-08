@@ -39,22 +39,36 @@ if uploaded_file is not None:
         'trash' : 'Ordures ménagères'
     }
     
-    my_bar = st.progress(0)
-    for percent_complete in range(100):
-        time.sleep(0.1)
-        my_bar.progress(percent_complete + 1)
+    if st.checkbox('Montrer la barre de progression'):
+        my_bar = st.progress(0)
+        for percent_complete in range(100):
+            time.sleep(0.1)
+            my_bar.progress(percent_complete + 1)
 
     if response.json()['probability'] >= 0.90:
         st.markdown("""
-        ### Selon Garby, votre déchet doit aller dans la poubelle :
+        ### Garby est confiant à plus de 90% que votre déchet doit aller dans la poubelle :
         """)
 
         st.write(translation[response.json()['prediction']])
+
+        if st.write(translation[response.json()['prediction']]) == 'Papier':
+            image = Image.open('paper.png')
+        elif st.write(translation[response.json()['prediction']]) == 'Carton':
+            image = Image.open('cardboard.png')
+        elif st.write(translation[response.json()['prediction']]) == 'Verre':
+            image = Image.open('glass.png')
+        elif st.write(translation[response.json()['prediction']]) == 'Plastique':
+            image = Image.open('plastic.png')
+        elif st.write(translation[response.json()['prediction']]) == 'Métal':
+            image = Image.open('metal.png')
+        else:
+            image = Image.open('trash.png')
         
-        st.markdown("""
-        ### Le niveau de confiance de Garby est de :
-        """)
-        st.write(round(float(response.json()['probability'])*100))
+        # st.markdown("""
+        # ### Le niveau de confiance de Garby est de :
+        # """)
+        # st.write(round(float(response.json()['probability'])*100))
         
         st.markdown("""
         ### Et voilà ! Merci qui ? Merci Garby !
