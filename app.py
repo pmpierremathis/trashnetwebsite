@@ -50,7 +50,7 @@ if uploaded_file is not None:
         """)
 
         st.write(translation[response.json()['prediction']])
-        image = Image.open(f"'{response.json()['prediction']}.png'")
+        image = Image.open(f"{response.json()['prediction']}.png")
       
         # st.markdown("""
         # ### Le niveau de confiance de Garby est de :
