@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 from PIL import Image
+import time
 
 '''
 # Bienvenue sur Garby.ai, votre assistant poubelle !
@@ -12,7 +13,7 @@ st.markdown("""
 
 
 st.markdown("""
-    ### Génial ! Comment ça marche ?
+    ### Comment ça marche ?
     """)
 
 st.markdown("""
@@ -38,19 +39,25 @@ if uploaded_file is not None:
         'trash' : 'Ordures ménagères'
     }
     
-    if response.json()['probability'] >= 0.9:
+    my_bar = st.progress(0)
+    for percent_complete in range(100):
+        time.sleep(0.1)
+        my_bar.progress(percent_complete + 1)
+
+    if response.json()['probability'] >= 0.90:
         st.markdown("""
         ### Selon Garby, votre déchet doit aller dans la poubelle :
         """)
+
         st.write(translation[response.json()['prediction']])
         
         st.markdown("""
-        ## Le niveau de confiance de Garby est de :
+        ### Le niveau de confiance de Garby est de :
         """)
-        st.write(round(float(response.json()['probability'])*100,3))
+        st.write(round(float(response.json()['probability'])*100))
         
         st.markdown("""
-        ## Et voilà ! Merci qui ? Merci Garby !
+        ### Et voilà ! Merci qui ? Merci Garby !
         """)
 
         image = Image.open('leo.png')
