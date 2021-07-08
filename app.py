@@ -3,12 +3,8 @@ import requests
 from PIL import Image
 
 '''
-# Mais dans quelle poubelle dois-je mettre ce déchet ?
+# Bienvenue sur Garby.ai, votre assistant poubelle !
 '''
-
-st.markdown("""
-    ### Bienvenue sur Garby.ai, votre assistant poubelle !""")
-
 st.markdown("""
     Vous ne savez pas dans quelle poubelle mettre votre déchet ?
     Laissez notre réseau de neurones *Garby Le Magnifique* s'en occuper pour vous !
@@ -16,7 +12,7 @@ st.markdown("""
 
 
 st.markdown("""
-    ## Génial ! Comment ça marche ?
+    ### Génial ! Comment ça marche ?
     """)
 
 st.markdown("""
@@ -44,7 +40,7 @@ if uploaded_file is not None:
     
     if response.json()['probability'] >= 0.9:
         st.markdown("""
-        ## Selon Garby, votre déchet doit aller dans la poubelle :
+        ### Selon Garby, votre déchet doit aller dans la poubelle :
         """)
         st.write(translation[response.json()['prediction']])
         
