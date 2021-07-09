@@ -32,6 +32,8 @@ if uploaded_file is not None:
     st.image(data)
     files = {'file' : data}
     response_predict = requests.post(url_predict, files=files)
+    prediction = response_predict.json()['prediction']
+    probability = response_predict.json()['probability']
     translation = {
         'paper' : 'Papier',
         'cardboard' : 'Carton',
@@ -51,47 +53,37 @@ if uploaded_file is not None:
         "Ceci ne va pas à la poubelle !" : "other"
         }
     
-    # my_bar = st.progress(0)
-    # for percent_complete in range(100):
-    #     time.sleep(0.1)
-    #     my_bar.progress(percent_complete + 1)
+    my_bar = st.progress(0)
+    for percent_complete in range(100):
+        time.sleep(0.1)
+        my_bar.progress(percent_complete + 1)
+    
         
-     ## IF GARBY IS ABLE TO MAKE A PREDICTION  
-    if response_predict.json()['probability'] >= 0.90:
+    ## IF GARBY IS ABLE TO MAKE A PREDICTION  
+    if probability >= 0.90:
         st.markdown("""
         ### Garby est confiant à plus de 90% que votre déchet doit aller dans la poubelle :
         """)
-        st.success(translation[response_predict.json()['prediction']])
-        trash_image = Image.open(f"{response_predict.json()['prediction']}.png")
-        st.image(trash_image)
+        st.success(translation[prediction])
+        trash_image = Image.open(f"{prediction}.png")
+        st.image(trash_image, )
         
         # USER VALIDATE THE PREDICTION
-        st.write("Êtes-vous d'accord avec cette prédiction?")
-        yes = st.button('Oui')
-        no = st.button('Non')
-        if yes:
-            st.write('Merci pour votre aide ! A bientôt 🎉')
-            checked_label = response_predict.json()['prediction']
+        list = ['Papier', 'Carton', 'Métal', 'Plastique', 'Verre', 'Ordures ménagères']
+        # Set the prediction at the top of the list
+        list.remove(translation[prediction])
+        list.insert(0,translation[prediction])
+        
+        st.write("Adiez-nous à nous améliorer, validez ou corriger notre prédiction si nécessaire")
+        option = st.radio("Corrigez si nécessaire", options= list)
+        validation1 = st.button("Je valide")
+        if validation1: 
+            checked_label = option_translation[option]
             data = {"checked_label" : checked_label}
             requests.post(url_labelling, data = data, files = files)
-            st.markdown("""
-            ### Et voilà ! Merci qui ? Merci Garby !
-            """)
+            st.write('Merci pour votre aide ! A bientôt 🎉')
             image = Image.open('leo.png')
             st.image(image, caption='This goes into the glass trash bro', use_column_width=False)
-    
-        # USER CHANGE THE PREDICTION
-        if no:
-            option = st.selectbox('Selon vous, ce déchet doit aller dans la poubelle :',("Faites votre choix", 'Papier', 'Carton', 'Métal', 'Plastique', 'Verre', 'Ordures ménagères', 'Ceci ne va pas à la poubelle !'))
-            if option=="Faites votre choix":
-                pass
-            else:
-                st.write('Merci pour votre aide ! A bientôt 🎉')
-                image = Image.open('leo.png')
-                st.image(image, caption='This goes into the glass trash bro', use_column_width=False)
-                checked_label = option_translation[option]
-                data = {"checked_label" : checked_label}
-                requests.post(url_labelling, data = data, files = files)
         
     ## IF GARBY IS NOT ABLE TO MAKE A PREDICTION  
     else:
