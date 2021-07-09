@@ -23,9 +23,10 @@ st.markdown("""
 
 uploaded_file = st.file_uploader("Importez votre image ici:")
 
-url_predict = 'http://127.0.0.1:8000/predict/image'
-url_labelling = 'http://127.0.0.1:8000/labelling'
-# url_predict = 'https://image-trashnet-znuzg7cgua-ew.a.run.app/predict/image'
+#url_predict = 'http://127.0.0.1:8000/predict/image'
+#url_labelling = 'http://127.0.0.1:8000/labelling'
+url_predict = 'https://image-trashnetv2-gcp-znuzg7cgua-ew.a.run.app/predict/image'
+url_labelling = 'https://image-trashnetv2-gcp-znuzg7cgua-ew.a.run.app/labelling'
 
 if uploaded_file is not None:
     data = uploaded_file.read()
@@ -74,7 +75,7 @@ if uploaded_file is not None:
         list.remove(translation[prediction])
         list.insert(0,translation[prediction])
         
-        st.write("Adiez-nous à nous améliorer, validez ou corriger notre prédiction si nécessaire")
+        st.write("Aidez-nous à nous améliorer, validez ou corriger notre prédiction si nécessaire")
         option = st.radio("Corrigez si nécessaire", options= list)
         validation1 = st.button("Je valide")
         if validation1: 
